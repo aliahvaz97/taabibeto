@@ -1,0 +1,153 @@
+/* HomeMedicalServices.css */
+
+.faq-container {
+    display: flex;
+    flex-direction: row; /* تصویر در سمت چپ و متن در سمت راست */
+    gap: 20px;
+    padding: 20px;
+    font-family: Vazir, sans-serif;
+  }
+  
+  .image-section {
+    flex: 1;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  
+  .image {
+    max-width: 100%;
+    height: auto;
+  }
+  
+  .faq-content {
+    flex: 2;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+  }
+  
+  .faq-item {
+    margin-bottom: 15px;
+    border-bottom: 1px solid #ddd;
+    padding-bottom: 10px;
+  }
+  
+  .faq-question {
+    cursor: pointer;
+    font-weight: bold;
+    color: #333;
+    padding: 10px;
+    background-color: #f7f7f7;
+    border-radius: 5px;
+  }
+  
+  .faq-question.active {
+    background-color: #00ccff;
+    color: white;
+  }
+  
+  .faq-answer {
+    margin-top: 10px;
+    padding: 10px;
+    background-color: #f1f1f1;
+    border-radius: 5px;
+    color: #555;
+  }
+  
+  /* Responsive Design */
+  @media (max-width: 768px) {
+    .faq-container {
+      flex-direction: column; /* تصویر بالا و متن پایین */
+      align-items: center;
+    }
+  
+    .image-section, .faq-content {
+      width: 100%; /* عرض کامل برای هر دو بخش در دستگاه‌های کوچکتر */
+      text-align: center;
+    }
+  }
+  /* HomeMedicalServices.css */
+
+.faq-container {
+    display: flex;
+    flex-direction: row; /* تصویر در سمت چپ و متن در سمت راست */
+    gap: 40px; /* فاصله بیشتر بین تصویر و متن */
+    padding: 40px;
+    background-color: #f9f9f9; /* پس‌زمینه روشن و ملایم */
+    border-radius: 15px; /* گوشه‌های گرد برای ظاهر نرم‌تر */
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1); /* سایه برای ایجاد عمق */
+    font-family: Vazir, sans-serif;
+}
+
+.image-section {
+    flex: 1;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.image {
+    max-width: 100%;
+    height: auto;
+    border-radius: 10px; /* گوشه‌های گرد برای تصویر */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* سایه ملایم برای تصویر */
+}
+
+.faq-content {
+    flex: 2;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.faq-item {
+    margin-bottom: 20px; /* فاصله بیشتر بین آیتم‌های FAQ */
+    padding: 15px;
+    border-radius: 10px; /* گوشه‌های گرد برای آیتم‌ها */
+    background-color: #ffffff; /* پس‌زمینه سفید برای کنتراست بیشتر */
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05); /* سایه ملایم */
+    transition: box-shadow 0.3s ease; /* انیمیشن تغییر سایه */
+}
+
+.faq-item:hover {
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1); /* سایه بیشتر هنگام هاور */
+}
+
+.faq-question {
+    cursor: pointer;
+    font-weight: bold;
+    color: #007acc; /* رنگ آبی روشن برای متن سوال */
+    padding: 15px;
+    background-color: #e7f5ff; /* پس‌زمینه آبی ملایم */
+    border-radius: 10px; /* گوشه‌های گرد برای سوال */
+    transition: background-color 0.3s ease; /* انیمیشن تغییر رنگ پس‌زمینه */
+}
+
+.faq-question.active {
+    background-color: #007acc; /* رنگ آبی تیره‌تر برای سوال فعال */
+    color: white; /* رنگ متن سفید برای سوال فعال */
+}
+
+.faq-answer {
+    margin-top: 10px;
+    padding: 15px;
+    background-color: #f1f1f1; /* پس‌زمینه خاکستری ملایم */
+    border-radius: 10px; /* گوشه‌های گرد برای جواب‌ها */
+    color: #333;
+    line-height: 1.6; /* فاصله بین خطوط برای خوانایی بهتر */
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .faq-container {
+        flex-direction: column; /* تصویر بالا و متن پایین */
+        align-items: center;
+        padding: 20px;
+    }
+
+    .image-section, .faq-content {
+        width: 100%; /* عرض کامل برای هر دو بخش در دستگاه‌های کوچکتر */
+        text-align: center;
+    }
+}

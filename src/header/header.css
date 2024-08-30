@@ -1,0 +1,102 @@
+.header {
+  display: flex;
+  justify-content: center; /* Center the nav links */
+  align-items: center;
+  padding: 10px 20px;
+  background-color: #fff;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  direction: rtl; /* تنظیم جهت راست به چپ برای متن */
+  font-family: 'Vazir', sans-serif;
+  position: relative; /* برای قرار دادن منوی همبرگری */
+}
+
+.logo {
+  font-size: 24px;
+  font-weight: bold;
+  position: absolute;
+  right: 20px; /* قرار دادن لوگو در سمت راست */
+}
+
+.logo a {
+  color: #00aaff;
+  text-decoration: none;
+}
+
+.nav-links {
+  display: flex;
+  gap: 15px;
+  flex-wrap: wrap;
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.nav-links a {
+  color: #333;
+  text-decoration: none;
+  font-size: 16px;
+}
+
+.nav-links a:hover {
+  color: #00aaff;
+}
+
+.menu-toggle {
+  display: none; /* پنهان کردن منوی همبرگری در نمایشگرهای بزرگ */
+  flex-direction: column;
+  cursor: pointer;
+}
+
+.bar {
+  width: 25px;
+  height: 3px;
+  background-color: #333;
+  margin: 3px 0;
+}
+
+/* نمایش منوی همبرگری در نمایشگرهای کوچکتر */
+@media (max-width: 768px) {
+  .nav-links {
+    display: none;
+    position: absolute;
+    top: 60px; /* فاصله از بالای هدر */
+    right: 20px;
+    background-color: #fff;
+    width: 100%;
+    text-align: right;
+    padding: 20px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  }
+
+  .nav-links.open {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .menu-toggle {
+    display: flex; /* نمایش منوی همبرگری در نمایشگرهای کوچک */
+  }
+}
+/* استایل‌های پیش‌فرض برای هدر */
+header {
+  position: relative;
+  background-color: #007bff;
+  color: white;
+  text-align: center;
+  padding: 10px 0;
+}
+
+/* استایل‌های مخصوص حالت موبایل */
+@media (max-width: 600px) {
+  header {
+      position: fixed;
+      top: 0;
+      width: 100%;
+      z-index: 1000;
+      padding: 15px 0;
+  }
+
+  body {
+      padding-top: 60px; /* ایجاد فضای بالای بادی برای جا دادن هدر ثابت */
+  }
+}

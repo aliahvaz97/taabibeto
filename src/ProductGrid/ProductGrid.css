@@ -1,0 +1,106 @@
+/* ProductGrid.css */
+
+.product-grid {
+    padding: 20px;
+    background-color: #f9f9f9;
+  }
+  
+  .grid-title {
+    text-align: center;
+    font-size: 2rem;
+    margin-bottom: 20px;
+    font-family: 'Vazir', sans-serif;
+  }
+  
+  .products {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr); /* چهار ستون برای دسکتاپ */
+    gap: 20px;
+  }
+  
+  .product-card {
+    background-color: #fff;
+    border: 1px solid #e0e0e0;
+    border-radius: 8px;
+    padding: 16px;
+    text-align: center;
+    position: relative;
+  }
+  
+  .image-container {
+    position: relative;
+  }
+  
+  .image-container img {
+    max-width: 100%;
+    height: auto;
+    border-radius: 8px;
+  }
+  
+  .sold-out-overlay {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    background-color: red;
+    color: white;
+    padding: 5px;
+    border-radius: 5px;
+    font-size: 0.875rem;
+  }
+  
+  .discount-badge {
+    position: absolute;
+    top: 10px;
+    left: 10px;
+    background-color: #ff5722;
+    color: white;
+    padding: 5px;
+    border-radius: 5px;
+    font-size: 0.875rem;
+  }
+  
+  .product-title {
+    font-size: 1.25rem;
+    font-weight: bold;
+    margin-top: 10px;
+    margin-bottom: 10px;
+  }
+  
+  .product-description {
+    font-size: 1rem;
+    color: #757575;
+    margin-bottom: 10px;
+  }
+  
+  .price-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+  }
+  
+  .product-price {
+    font-size: 1.25rem;
+    font-weight: bold;
+    color: #388e3c;
+  }
+  
+  .original-price {
+    font-size: 1rem;
+    color: #757575;
+    text-decoration: line-through;
+  }
+  
+  /* Responsive Design */
+  @media (max-width: 1024px) {
+    .products {
+      grid-template-columns: repeat(2, 1fr); /* دو ستون برای تبلت */
+    }
+  }
+  
+  @media (max-width: 600px) {
+    .products {
+      grid-template-columns: 1fr; /* یک ستون برای موبایل */
+    }
+  }
+  
