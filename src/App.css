@@ -102,17 +102,26 @@ button {
 /* اضافه کردن فونت وزیر */
 @font-face {
   font-family: 'Vazir';
-  src: url('../src/fonts/vazir-font-v16.1.0/Vazir-Bold.woff') format('woff2'),
-       url('..//src/fonts/vazir-font-v16.1.0/Vazir-Light.woff') format('woff'),
-       url('../src/fonts/vazir-font-v16.1.0/Vazir-Bold.ttf') format('truetype');
+  src: url('./fonts/vazir-font-v16.1.0/Vazir-Bold.woff2') format('woff2'),
+       url('./fonts/vazir-font-v16.1.0/Vazir-Light.woff') format('woff'),
+       url('./fonts/vazir-font-v16.1.0/Vazir-Bold.ttf') format('truetype');
   font-weight: normal;
   font-style: normal;
 }
+
 /* استایل‌های عمومی */
 .reservation-container {
     max-width: 1200px;
     margin: 0 auto;
     padding: 20px;
+}
+body {
+  overflow-x: hidden; /* مخفی کردن overflow افقی */
+}
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
 }
 
 /* استایل‌های مخصوص موبایل */
@@ -127,4 +136,3 @@ button {
         margin-bottom: 10px;
     }
 }
-

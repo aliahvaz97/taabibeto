@@ -4,11 +4,12 @@ import Header from './header/header';
 import Body from "./body1/body";
 import WhySnappDoctor from './whytaabibeto/whytaabibeto';
 import HomeMedicalServices from './HomeMedicalServices/HomeMedicalServices';
-import ProductGrid from"./ProductGrid/ProductGrid";
+import ProductGrid from "./ProductGrid/ProductGrid";
 import Footer from './footer/Footer';
 import ReservationPage from './rezevparstar/parstar';
-import './App.css';
+import NurseSelection from './NurseSelection/NurseSelection'; // اضافه کردن NurseSelection
 
+import './App.css';
 
 function App() {
   return (
@@ -25,6 +26,7 @@ function App() {
             </>
           } />
           <Route path="/rezevparstar/parstar" element={<ReservationPage />} />
+          <Route path="/nurse-selection" element={<NurseSelection />} />
           {/* سایر مسیرها */}
         </Routes>
         <Footer />

@@ -1,160 +1,229 @@
-import React, { useState } from 'react';
-import moment from 'jalali-moment';
+import React, { useState, useRef, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
+import { Calendar } from 'react-multi-date-picker';
+import persian from 'react-date-object/calendars/persian';
+import persian_fa from 'react-date-object/locales/persian_fa';
 
 const BookingForm = () => {
-    const [formData, setFormData] = useState({
-        name: '',
-        age: '',
-        phone: '',
-        date: '',
-        time: '',
-        address: '',
-        notes: ''
+  const [formData, setFormData] = useState({
+    name: '',
+    age: '',
+    phone: '',
+    date: null, // تغییر به null برای تقویم جدید
+    time: '',
+    address: '',
+    notes: ''
+  });
+
+  const [isCalendarOpen, setCalendarOpen] = useState(false);
+  const calendarRef = useRef(null);
+
+  const availableTimes = [
+    '08:00', '09:00', '10:00', '11:00', '12:00',
+    '13:00', '14:00', '15:00', '16:00', '17:00', '18:00'
+  ];
+
+  const navigate = useNavigate();
+
+  const handleChange = (e) => {
+    setFormData({
+      ...formData,
+      [e.target.name]: e.target.value
+    });
+  };
+
+  const handleDateChange = (date) => {
+    setFormData({
+      ...formData,
+      date: date
+    });
+    setCalendarOpen(false);
+  };
+
+  const handleTimeChange = (e) => {
+    setFormData({
+      ...formData,
+      time: e.target.value
+    });
+  };
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    const gregorianDate = formData.date ? formData.date.format('YYYY-MM-DD') : '';
+    const time24Hour = formData.time;
+    console.log('Form Data Submitted:', {
+      ...formData,
+      date: gregorianDate,
+      time: time24Hour,
     });
 
-    const handleChange = (e) => {
-        setFormData({
-            ...formData,
-            [e.target.name]: e.target.value
-        });
+    navigate('/nurse-selection');
+  };
+
+  useEffect(() => {
+    const currentCalendarRef = calendarRef.current;
+
+    const handleClickOutside = (event) => {
+      if (currentCalendarRef && !currentCalendarRef.contains(event.target)) {
+        setCalendarOpen(false);
+      }
     };
 
-    const handleSubmit = (e) => {
-        e.preventDefault();
-        const gregorianDate = moment(formData.date, 'jYYYY/jMM/jDD').format('YYYY-MM-DD');
-        const time24Hour = formData.time;
-        console.log('Form Data Submitted:', {
-            ...formData,
-            date: gregorianDate,
-            time: time24Hour,
-        });
-        // اینجا می‌توانید داده‌ها را به سرور ارسال کنید
-    };
+    if (isCalendarOpen) {
+      document.addEventListener('mousedown', handleClickOutside);
+    }
 
-    return (
-        <form onSubmit={handleSubmit} style={formStyle}>
-            <div style={fieldStyle}>
-                <label>نام:</label>
-                <input
-                    type="text"
-                    name="name"
-                    value={formData.name}
-                    onChange={handleChange}
-                    required
-                    style={inputStyle}
-                />
-            </div>
-            <div style={fieldStyle}>
-                <label>سن:</label>
-                <input
-                    type="number"
-                    name="age"
-                    value={formData.age}
-                    onChange={handleChange}
-                    required
-                    style={inputStyle}
-                />
-            </div>
-            <div style={fieldStyle}>
-                <label>شماره تلفن:</label>
-                <input
-                    type="tel"
-                    name="phone"
-                    value={formData.phone}
-                    onChange={handleChange}
-                    required
-                    style={inputStyle}
-                />
-            </div>
-            <div style={fieldStyle}>
-                <label>تاریخ رزرو (شمسی):</label>
-                <input
-                    type="text"
-                    name="date"
-                    value={formData.date}
-                    onChange={handleChange}
-                    required
-                    placeholder="مثلاً 1403/05/12"
-                    style={inputStyle}
-                />
-            </div>
-            <div style={fieldStyle}>
-                <label>ساعت رزرو (24 ساعته):</label>
-                <input
-                    type="time"
-                    name="time"
-                    value={formData.time}
-                    onChange={handleChange}
-                    required
-                    style={inputStyle}
-                />
-            </div>
-            <div style={fieldStyle}>
-                <label>آدرس:</label>
-                <input
-                    type="text"
-                    name="address"
-                    value={formData.address}
-                    onChange={handleChange}
-                    required
-                    style={inputStyle}
-                />
-            </div>
-            <div style={fieldStyle}>
-                <label>توضیحات:</label>
-                <textarea
-                    name="notes"
-                    value={formData.notes}
-                    onChange={handleChange}
-                    style={textareaStyle}
-                ></textarea>
-            </div>
-            <button type="submit" style={buttonStyle}>ثبت رزرو</button>
-        </form>
-    );
+    return () => {
+      document.removeEventListener('mousedown', handleClickOutside);
+    };
+  }, [isCalendarOpen]);
+
+  return (
+    <form onSubmit={handleSubmit} style={formStyle}>
+      <div style={fieldStyle}>
+        <label>نام:</label>
+        <input
+          type="text"
+          name="name"
+          value={formData.name}
+          onChange={handleChange}
+          required
+          style={inputStyle}
+        />
+      </div>
+      <div style={fieldStyle}>
+        <label>سن:</label>
+        <input
+          type="number"
+          name="age"
+          value={formData.age}
+          onChange={handleChange}
+          required
+          style={inputStyle}
+        />
+      </div>
+      <div style={fieldStyle}>
+        <label>شماره تلفن:</label>
+        <input
+          type="tel"
+          name="phone"
+          value={formData.phone}
+          onChange={handleChange}
+          required
+          style={inputStyle}
+        />
+      </div>
+      <div style={fieldStyle}>
+        <label>تاریخ رزرو (شمسی):</label>
+        <input
+          type="text"
+          value={formData.date ? formData.date.format('YYYY/MM/DD') : ''}
+          onFocus={() => setCalendarOpen(true)}
+          readOnly
+          placeholder="انتخاب تاریخ"
+          style={inputStyle}
+        />
+        {isCalendarOpen && (
+          <div ref={calendarRef} style={calendarContainerStyle}>
+            <Calendar
+              value={formData.date}
+              onChange={handleDateChange}
+              calendar={persian}
+              locale={persian_fa}
+            />
+          </div>
+        )}
+      </div>
+      <div style={fieldStyle}>
+        <label>ساعت رزرو:</label>
+        <select
+          name="time"
+          value={formData.time}
+          onChange={handleTimeChange}
+          required
+          style={inputStyle}
+        >
+          <option value="" disabled>انتخاب ساعت</option>
+          {availableTimes.map((time, index) => (
+            <option key={index} value={time}>{time}</option>
+          ))}
+        </select>
+      </div>
+      <div style={fieldStyle}>
+        <label>آدرس:</label>
+        <input
+          type="text"
+          name="address"
+          value={formData.address}
+          onChange={handleChange}
+          required
+          style={inputStyle}
+        />
+      </div>
+      <div style={fieldStyle}>
+        <label>توضیحات:</label>
+        <textarea
+          name="notes"
+          value={formData.notes}
+          onChange={handleChange}
+          style={textareaStyle}
+        ></textarea>
+      </div>
+      <button type="submit" style={buttonStyle}>ادامه</button>
+    </form>
+  );
 };
 
 const formStyle = {
-    display: 'flex',
-    flexDirection: 'column',
-    alignItems: 'center',
-    maxWidth: '500px',
-    margin: 'auto',
-    padding: '20px',
-    boxShadow: '0 0 10px rgba(0, 0, 0, 0.1)',
-    borderRadius: '5px',
-    backgroundColor: '#f9f9f9',
+  display: 'flex',
+  flexDirection: 'column',
+  alignItems: 'center',
+  maxWidth: '500px',
+  margin: 'auto',
+  padding: '20px',
+  boxShadow: '0 0 10px rgba(0, 0, 0, 0.1)',
+  borderRadius: '5px',
+  backgroundColor: '#f9f9f9',
 };
 
 const fieldStyle = {
-    margin: '10px 0',
-    width: '100%',
+  margin: '10px 0',
+  width: '100%',
 };
 
 const inputStyle = {
-    width: '100%',
-    padding: '10px',
-    borderRadius: '5px',
-    border: '1px solid #ddd',
+  width: '100%',
+  padding: '10px',
+  borderRadius: '5px',
+  border: '1px solid #ddd',
 };
 
 const textareaStyle = {
-    width: '100%',
-    padding: '10px',
-    borderRadius: '5px',
-    border: '1px solid #ddd',
-    resize: 'vertical',
+  width: '100%',
+  padding: '10px',
+  borderRadius: '5px',
+  border: '1px solid #ddd',
+  resize: 'vertical',
 };
 
 const buttonStyle = {
-    padding: '10px 20px',
-    borderRadius: '5px',
-    border: 'none',
-    backgroundColor: '#28a745',
-    color: 'white',
-    fontSize: '16px',
-    cursor: 'pointer',
+  padding: '10px 20px',
+  borderRadius: '5px',
+  border: 'none',
+  backgroundColor: '#28a745',
+  color: 'white',
+  fontSize: '16px',
+  cursor: 'pointer',
 };
 
+const calendarContainerStyle = {
+  position: 'absolute',
+  zIndex: '1000',
+  backgroundColor: 'white',
+  border: '1px solid #ddd',
+  borderRadius: '5px',
+  boxShadow: '0 0 10px rgba(0, 0, 0, 0.1)',
+  padding: '10px',
+};
 
 export default BookingForm;
