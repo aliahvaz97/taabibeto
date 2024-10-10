@@ -21,6 +21,21 @@
   color: #00aaff;
   text-decoration: none;
 }
+.auth-links  {
+  display: flex;
+  justify-content: flex-start;
+  gap: 15px;
+  flex-wrap: wrap;
+  padding: 0;
+  margin: 0;
+
+}
+
+.auth-links a {
+  color: #333;
+  text-decoration: none;
+  font-size: 16px;
+}
 
 .nav-links {
   display: flex;
@@ -29,6 +44,7 @@
   list-style: none;
   padding: 0;
   margin: 0;
+
 }
 
 .nav-links a {
@@ -98,5 +114,164 @@ header {
 
   body {
       padding-top: 60px; /* ایجاد فضای بالای بادی برای جا دادن هدر ثابت */
+  }
+}
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px 20px;
+  background-color: #fff;
+}
+
+.logo {
+  font-size: 24px;
+  font-weight: bold;
+}
+
+.auth-links {
+  position: absolute;
+  left: 20px; /* به گوشه سمت چپ منتقل می‌شود */
+  display: flex;
+  gap: 10px;
+}
+
+.auth-links a, .user-name {
+  display: inline-block;
+  padding: 5px;
+  color: #000;
+  text-decoration: none;
+  position: relative;
+}
+
+.auth-links a::before {
+  content: "🔒"; /* آیکون قفل برای ورود */
+  position: absolute;
+  left: -20px;
+}
+
+.auth-links a[href="#signup"]::before {
+  content: "📝"; /* آیکون قلم برای ثبت نام */
+}
+
+.user-name::before {
+  content: "👤"; /* آیکون کاربر برای نام کاربر */
+  position: absolute;
+  left: -20px;
+}
+
+.nav-links {
+  display: flex;
+  gap: 15px;
+}
+
+.menu-toggle {
+  display: none;
+}
+
+.bar {
+  width: 25px;
+  height: 3px;
+  background-color: #000;
+  margin: 4px 0;
+}
+
+/* برای حالت موبایل */
+@media (max-width: 768px) {
+  .nav-links {
+    display: none;
+    flex-direction: column;
+    background-color: #fff;
+    position: absolute;
+    top: 60px;
+    right: 0;
+    width: 100%;
+    text-align: center;
+  }
+
+  .nav-links.open {
+    display: flex;
+  }
+
+  .menu-toggle {
+    display: block;
+    cursor: pointer;
+  }
+
+  .auth-links {
+    position: static;
+    left: auto;
+    order: 1;
+  }
+}
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px 20px;
+  background-color: #fff;
+  position: relative;
+}
+
+.logo {
+  font-size: 24px;
+  font-weight: bold;
+}
+
+.auth-links {
+  position: absolute;
+  left: 20px; /* به گوشه سمت چپ منتقل می‌شود */
+  display: flex;
+  gap: 10px;
+}
+
+.nav-links {
+  display: flex;
+  gap: 15px;
+  justify-content: center;
+  flex: 1;
+}
+
+.menu-toggle {
+  display: none;
+}
+
+.bar {
+  width: 25px;
+  height: 3px;
+  background-color: #000;
+  margin: 4px 0;
+}
+
+/* برای حالت موبایل */
+@media (max-width: 768px) {
+  .nav-links {
+    display: flex;
+    justify-content: center;
+    flex: 1;
+    order: 2; /* حفظ جایگاه وسط در صفحه نمایش‌های کوچک */
+  }
+
+  .menu-toggle {
+    display: block;
+    cursor: pointer;
+    order: 3;
+  }
+
+  .auth-links {
+    position: static;
+    left: auto;
+    order: 1;
+  }
+
+  .nav-links.open {
+    display: flex;
+    flex-direction: column;
+    position: absolute;
+    top: 60px;
+    left: 0;
+    width: 100%;
+    background-color: #fff;
+    align-items: center;
   }
 }

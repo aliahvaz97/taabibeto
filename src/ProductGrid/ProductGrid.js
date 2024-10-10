@@ -1,6 +1,5 @@
 import React from 'react';
 import './ProductGrid.css';
-
 // ایمپورت تصاویر محلی
 import image1 from '../assests/818fca25b022998113320dd005d688b685aeea4a_1691389556.jpg';
 import image2 from '../assests/Digital-sphygmomanometer-1.jpg';

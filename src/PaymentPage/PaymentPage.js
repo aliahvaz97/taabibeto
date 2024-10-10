@@ -1,65 +1,70 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
+import { useLocation } from 'react-router-dom';
+import axios from 'axios';
+import "./PaymentPage.css";
 
-const PaymentPage = ({ selectedNurse }) => {
-    if (!selectedNurse) {
-        return <p>لطفا یک پرستار را انتخاب کنید تا به صفحه پرداخت هدایت شوید.</p>;
+const PaymentPage = () => {
+  const [name, setName] = useState('');
+  const [email, setEmail] = useState('');
+  const [phone, setPhone] = useState('');
+  const [amount, setAmount] = useState(0);
+
+  const location = useLocation();
+  const queryParams = new URLSearchParams(location.search);
+  const price = queryParams.get('price');
+
+  useEffect(() => {
+    if (price) {
+      setAmount(parseInt(price, 10));
     }
+  }, [price]);
 
-    const handlePayment = () => {
-        // اینجا می‌توانید کارهای مربوط به پردازش پرداخت یا هدایت به درگاه پرداخت را انجام دهید
-        console.log(`پرداخت برای ${selectedNurse.name} انجام شد.`);
-        // مثلا هدایت به صفحه درگاه پرداخت:
-        window.location.href = 'https://example-payment-gateway.com';
-    };
+  const handleSubmit = async (event) => {
+    event.preventDefault();
 
-    return (
-        <div style={paymentContainerStyle}>
-            <h2>صفحه پرداخت</h2>
-            <div style={nurseInfoStyle}>
-                <h3>اطلاعات پرستار انتخاب شده:</h3>
-                <p><strong>نام:</strong> {selectedNurse.name}</p>
-                <p><strong>تخصص:</strong> {selectedNurse.specialization}</p>
-                <p><strong>امتیاز:</strong> {selectedNurse.rating}</p>
-                <p><strong>هزینه خدمات:</strong> ۲۰۰,۰۰۰ تومان</p>
-            </div>
-            <button onClick={handlePayment} style={payButtonStyle}>پرداخت</button>
-        </div>
-    );
-};
+    try {
+      const response = await axios.post('https://api.zarinpal.com/pg/v4/payment/request.json', {
+        amount: amount,
+        description: 'پرداخت بابت خدمات پرستاری',
+        email: email,
+        phone: phone,
+        callbackUrl: 'http://yourwebsite.com/callback'
+      });
 
-const paymentContainerStyle = {
-    display: 'flex',
-    flexDirection: 'column',
-    alignItems: 'center',
-    justifyContent: 'center',
-    padding: '40px',
-    maxWidth: '600px',
-    margin: 'auto',
-    backgroundColor: '#f9f9f9',
-    borderRadius: '10px',
-    boxShadow: '0 0 15px rgba(0, 0, 0, 0.1)',
-};
+      if (response.data.status === 100) {
+        window.location.href = `https://www.zarinpal.com/pg/StartPay/${response.data.authority}`;
+      } else {
+        console.error('خطا در دریافت لینک پرداخت:', response.data.message);
+      }
+    } catch (error) {
+      console.error('خطا در درخواست پرداخت:', error);
+    }
+  };
 
-const nurseInfoStyle = {
-    textAlign: 'center',
-    marginBottom: '20px',
-    padding: '20px',
-    border: '1px solid #ddd',
-    borderRadius: '8px',
-    width: '100%',
-    backgroundColor: '#ffffff',
-    boxShadow: '0 4px 8px rgba(0, 0, 0, 0.05)',
-};
-
-const payButtonStyle = {
-    padding: '15px 30px',
-    borderRadius: '30px',
-    border: 'none',
-    backgroundColor: '#28a745',
-    color: 'white',
-    fontSize: '18px',
-    cursor: 'pointer',
-    transition: 'background-color 0.3s ease',
+  return (
+    <div className="payment-page">
+      <h1>صفحه پرداخت</h1>
+      <form onSubmit={handleSubmit}>
+        <label>
+          نام و نام خانوادگی:
+          <input type="text" value={name} onChange={(e) => setName(e.target.value)} required />
+        </label>
+        <label>
+          آدرس ایمیل:
+          <input type="email" value={email} onChange={(e) => setEmail(e.target.value)} required />
+        </label>
+        <label>
+          شماره تماس:
+          <input type="text" value={phone} onChange={(e) => setPhone(e.target.value)} required />
+        </label>
+        <label>
+          مبلغ پرداختی:
+          <input type="number" value={amount} readOnly />
+        </label>
+        <button type="submit">پرداخت</button>
+      </form>
+    </div>
+  );
 };
 
 export default PaymentPage;

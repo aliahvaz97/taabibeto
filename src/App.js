@@ -7,11 +7,17 @@ import HomeMedicalServices from './HomeMedicalServices/HomeMedicalServices';
 import ProductGrid from "./ProductGrid/ProductGrid";
 import Footer from './footer/Footer';
 import ReservationPage from './rezevparstar/parstar';
-import NurseSelection from './NurseSelection/NurseSelection'; // اضافه کردن NurseSelection
-
+import NurseSelection from './NurseSelection/NurseSelection';
+import PaymentPage from './PaymentPage/PaymentPage'; // اضافه کردن صفحه پرداخت
 import './App.css';
 
 function App() {
+  // تعریف تابع انتخاب پرستار
+  const handleNurseSelect = (nurse) => {
+    console.log("پرستار انتخاب شده:", nurse);
+    // عملیات دلخواه هنگام انتخاب پرستار
+  };
+
   return (
     <Router>
       <div className="App">
@@ -26,8 +32,9 @@ function App() {
             </>
           } />
           <Route path="/rezevparstar/parstar" element={<ReservationPage />} />
-          <Route path="/nurse-selection" element={<NurseSelection />} />
-          {/* سایر مسیرها */}
+          {/* ارسال تابع به عنوان پراپ به کامپوننت NurseSelection */}
+          <Route path="/nurse-selection" element={<NurseSelection onSelectNurse={handleNurseSelect} />} />
+          <Route path="/payment" element={<PaymentPage />} /> {/* مسیر صفحه پرداخت */}
         </Routes>
         <Footer />
       </div>

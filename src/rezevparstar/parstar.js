@@ -3,6 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import { Calendar } from 'react-multi-date-picker';
 import persian from 'react-date-object/calendars/persian';
 import persian_fa from 'react-date-object/locales/persian_fa';
+import { reserveService } from './services/api'; // Import the reserveService function
 
 const BookingForm = () => {
   const [formData, setFormData] = useState({
@@ -47,17 +48,34 @@ const BookingForm = () => {
     });
   };
 
-  const handleSubmit = (e) => {
+  // Submit form data to the backend
+  const handleSubmit = async (e) => {
     e.preventDefault();
+
+    // Convert the date to the Gregorian calendar format (if using a Jalali calendar)
     const gregorianDate = formData.date ? formData.date.format('YYYY-MM-DD') : '';
     const time24Hour = formData.time;
-    console.log('Form Data Submitted:', {
-      ...formData,
+
+    const reservationData = {
+      name: formData.name,
+      age: formData.age,
+      phone: formData.phone,
       date: gregorianDate,
       time: time24Hour,
-    });
+      address: formData.address,
+      notes: formData.notes,
+    };
 
-    navigate('/nurse-selection');
+    try {
+      // Call the reserveService API function
+      const response = await reserveService(reservationData);
+      console.log('Reservation Successful:', response);
+
+      // Navigate to the nurse-selection page
+      navigate('/nurse-selection');
+    } catch (error) {
+      console.error('Error submitting reservation:', error);
+    }
   };
 
   useEffect(() => {
@@ -174,6 +192,7 @@ const BookingForm = () => {
   );
 };
 
+// Styling
 const formStyle = {
   display: 'flex',
   flexDirection: 'column',
