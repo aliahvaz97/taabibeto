@@ -16,7 +16,7 @@ const NurseSelection = ({ onSelectNurse }) => {
 
   const handleSelect = (nurse) => {
     onSelectNurse(nurse);
-    navigate(`/payment?price=${nurse.price}`); // انتقال قیمت به URL
+    navigate(`/payment?price=${nurse.price}`);
   };
 
   return (
@@ -34,9 +34,6 @@ const NurseSelection = ({ onSelectNurse }) => {
     </div>
   );
 };
-
-// تعریف استایل‌ها و سایر کدها
-
 
 // تعریف استایل‌ها
 const nurseListStyle = {
@@ -84,5 +81,4 @@ const buttonStyle = {
   transition: 'background-color 0.3s ease, transform 0.3s ease',
 };
 
-// اکسپورت کامپوننت
 export default NurseSelection;
