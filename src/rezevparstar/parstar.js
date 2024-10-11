@@ -3,14 +3,13 @@ import { useNavigate } from 'react-router-dom';
 import { Calendar } from 'react-multi-date-picker';
 import persian from 'react-date-object/calendars/persian';
 import persian_fa from 'react-date-object/locales/persian_fa';
-import { reserveService } from './services/api'; // Import the reserveService function
 
 const BookingForm = () => {
   const [formData, setFormData] = useState({
     name: '',
     age: '',
     phone: '',
-    date: null, // تغییر به null برای تقویم جدید
+    date: null,
     time: '',
     address: '',
     notes: ''
@@ -18,13 +17,12 @@ const BookingForm = () => {
 
   const [isCalendarOpen, setCalendarOpen] = useState(false);
   const calendarRef = useRef(null);
+  const navigate = useNavigate();
 
   const availableTimes = [
     '08:00', '09:00', '10:00', '11:00', '12:00',
     '13:00', '14:00', '15:00', '16:00', '17:00', '18:00'
   ];
-
-  const navigate = useNavigate();
 
   const handleChange = (e) => {
     setFormData({
@@ -49,7 +47,7 @@ const BookingForm = () => {
   };
 
   // Submit form data to the backend
-  const handleSubmit = async (e) => {
+  const handleSubmit = (e) => {
     e.preventDefault();
 
     // Convert the date to the Gregorian calendar format (if using a Jalali calendar)
@@ -66,16 +64,30 @@ const BookingForm = () => {
       notes: formData.notes,
     };
 
-    try {
-      // Call the reserveService API function
-      const response = await reserveService(reservationData);
-      console.log('Reservation Successful:', response);
-
-      // Navigate to the nurse-selection page
-      navigate('/nurse-selection');
-    } catch (error) {
+    fetch('https://your-api-endpoint.com/reservations', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(reservationData),
+    })
+    .then((response) => {
+      if (response.ok) {
+        return response.json();
+      } else {
+        console.error('Failed to create reservation');
+      }
+    })
+    .then((result) => {
+      if (result) {
+        console.log('Reservation Successful:', result);
+        // Navigate to the nurse-selection page
+        navigate('/nurse-selection');
+      }
+    })
+    .catch((error) => {
       console.error('Error submitting reservation:', error);
-    }
+    });
   };
 
   useEffect(() => {
