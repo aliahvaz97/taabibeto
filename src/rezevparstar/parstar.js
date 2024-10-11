@@ -46,48 +46,14 @@ const BookingForm = () => {
     });
   };
 
-  // Submit form data to the backend
   const handleSubmit = (e) => {
     e.preventDefault();
 
-    // Convert the date to the Gregorian calendar format (if using a Jalali calendar)
-    const gregorianDate = formData.date ? formData.date.format('YYYY-MM-DD') : '';
-    const time24Hour = formData.time;
-
-    const reservationData = {
-      name: formData.name,
-      age: formData.age,
-      phone: formData.phone,
-      date: gregorianDate,
-      time: time24Hour,
-      address: formData.address,
-      notes: formData.notes,
-    };
-
-    fetch('https://your-api-endpoint.com/reservations', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify(reservationData),
-    })
-    .then((response) => {
-      if (response.ok) {
-        return response.json();
-      } else {
-        console.error('Failed to create reservation');
-      }
-    })
-    .then((result) => {
-      if (result) {
-        console.log('Reservation Successful:', result);
-        // Navigate to the nurse-selection page
-        navigate('/nurse-selection');
-      }
-    })
-    .catch((error) => {
-      console.error('Error submitting reservation:', error);
-    });
+    // نمایش اطلاعات در کنسول به جای ارسال به API
+    console.log('اطلاعات رزرو:', formData);
+    
+    // اینجا می‌توانید کارهای دیگری انجام دهید، مانند هدایت به صفحه بعد
+    navigate('/nurse-selection'); // به صفحه انتخاب پرستار هدایت می‌کند
   };
 
   useEffect(() => {

@@ -32,7 +32,6 @@ function App() {
             </>
           } />
           <Route path="/rezevparstar/parstar" element={<ReservationPage />} />
-          {/* ارسال تابع به عنوان پراپ به کامپوننت NurseSelection */}
           <Route path="/nurse-selection" element={<NurseSelection onSelectNurse={handleNurseSelect} />} />
           <Route path="/payment" element={<PaymentPage />} /> {/* مسیر صفحه پرداخت */}
         </Routes>
