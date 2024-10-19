@@ -8,8 +8,19 @@ const getUser = (req,res) => {
 })
 }
 
+const insertUser = (req,res) => {
+    if (!req.body.name || req.body.name.length < 3)
+        {
+            res.status(400).send("name is required")
+            return
+        }
+    UsersModel.insertUser(req.body.name,req.body.number).then((result)=>{
+        res.send(result)
+    })
+}
+
 module.exports =
  {
-    getUser
-    
+    getUser,
+    insertUser
  }
