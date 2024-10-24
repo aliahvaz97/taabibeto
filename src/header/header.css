@@ -9,6 +9,35 @@
   font-family: 'Vazir', sans-serif;
   position: relative; /* برای قرار دادن منوی همبرگری */
 }
+.menu-btn {
+  position: absolute;
+  top: 10px; /* فاصله از بالا */
+  right: 10px; /* فاصله از راست */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 80px;
+  height: 80px;
+  cursor: pointer;
+  transition: all .5s ease-in-out;
+}
+body {
+  padding-top: 100px; /* ارتفاع نوار ناوبری */
+  background: #272727;
+  display: flex;
+  min-height: 100vh;
+}
+
+.menu-btn {
+  position: absolute;
+  top: 0;
+  right: 0;
+  /* باقی CSS شما */
+}
+body {
+  padding-top: 100px;
+  /* باقی CSS شما */
+}
 
 .logo {
   font-size: 24px;
@@ -783,4 +812,25 @@ body {
   .menu-toggle {
       order: 1; /* ترتیب جدید برای منوی همبرگری */
   }
+
+.mobile-header {
+  display: flex;
+  justify-content: space-between; /* عناصر را در دو طرف تقسیم می‌کند */
+  align-items: center; /* عناصر را عمودی وسط قرار می‌دهد */
+  padding: 10px;
+  background-color: #f8f8f8; /* رنگ پس‌زمینه */
+}
+
+.logo {
+  flex: 1; /* اجازه می‌دهد که لوگو در وسط قرار گیرد */
+  text-align: center; /* متن لوگو را وسط‌چین می‌کند */
+}
+
+.signup-link {
+  margin-left: 10px; /* فاصله از سمت چپ */
+}
+
+.hamburger-menu {
+  margin-right: 10px; /* فاصله از سمت راست */
+}
 }

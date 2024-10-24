@@ -27,11 +27,14 @@ const MedicalServices = () => {
 
         {/* بخش دکمه‌ها */}
         <div className="buttons">
-          <Link to="./rezevparstar/parstar" className="reserve-button">
-            همین الان رزرو کنید
-          </Link>
-          <button className="support-button">تماس با پشتیبانی</button>
-        </div>
+  <Link to="./rezevparstar/parstar" className="reserve-button">
+    همین الان رزرو کنید
+  </Link>
+  <a href="tel:+989227819056" className="support-button">
+    تماس با پشتیبانی
+  </a>
+</div>
+
       </div>
     </div>
   );

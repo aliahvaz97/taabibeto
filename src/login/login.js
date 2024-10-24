@@ -1,61 +1,75 @@
-import React from 'react';
-import "./login.css";
-import {
-  MDBBtn,
-  MDBContainer,
-  MDBRow,
-  MDBCol,
-  MDBCard,
-  MDBCardBody,
-  MDBInput,
-  MDBIcon,
-  MDBCheckbox
-}
-from 'mdb-react-ui-kit';
+import React, { useState } from 'react';
+import PhoneInput from 'react-phone-input-2';
+import 'react-phone-input-2/lib/style.css';
+import './login.css';
 
-function App() {
+const SignUpWithPhone = ({ onLoginSuccess }) => {
+  const [phoneNumber, setPhoneNumber] = useState('');
+  const [lastName, setLastName] = useState('');
+  const [otpSent, setOtpSent] = useState(false);
+  const [otp, setOtp] = useState('');
+
+  const handleSendOtp = () => {
+    if (phoneNumber && lastName) {
+      setOtpSent(true);
+      console.log('OTP sent to:', phoneNumber);
+      // در اینجا باید کد ارسال OTP به سرور خود را اضافه کنید...
+    } else {
+      alert('لطفاً شماره تلفن و نام خانوادگی را وارد کنید.');
+    }
+  };
+
+  const handleVerifyOtp = () => {
+    if (otp) {
+      console.log('OTP Verified:', otp);
+      // در اینجا باید کد تایید OTP را به سرور خود ارسال کنید.
+      onLoginSuccess();
+    } else {
+      alert('لطفاً کد یکبار مصرف را وارد کنید.');
+    }
+  };
+
   return (
-    <MDBContainer fluid>
-
-      <MDBRow className='d-flex justify-content-center align-items-center h-100'>
-        <MDBCol col='12'>
-
-          <MDBCard className='bg-white my-5 mx-auto' style={{borderRadius: '1rem', maxWidth: '500px'}}>
-            <MDBCardBody className='p-5 w-100 d-flex flex-column'>
-
-              <h2 className="fw-bold mb-2 text-center">Sign in</h2>
-              <p className="text-white-50 mb-3">Please enter your login and password!</p>
-
-              <MDBInput wrapperClass='mb-4 w-100' label='Email address' id='formControlLg' type='email' size="lg"/>
-              <MDBInput wrapperClass='mb-4 w-100' label='Password' id='formControlLg' type='password' size="lg"/>
-
-              <MDBCheckbox name='flexCheck' id='flexCheckDefault' className='mb-4' label='Remember password' />
-
-              <MDBBtn size='lg'>
-                Login
-              </MDBBtn>
-
-              <hr className="my-4" />
-
-              <MDBBtn className="mb-2 w-100" size="lg" style={{backgroundColor: '#dd4b39'}}>
-                <MDBIcon fab icon="google" className="mx-2"/>
-                Sign in with google
-              </MDBBtn>
-
-              <MDBBtn className="mb-4 w-100" size="lg" style={{backgroundColor: '#3b5998'}}>
-                <MDBIcon fab icon="facebook-f" className="mx-2"/>
-                Sign in with facebook
-              </MDBBtn>
-
-            </MDBCardBody>
-          </MDBCard>
-
-        </MDBCol>
-      </MDBRow>
-
-    </MDBContainer>
+    <div className="signup-container">
+      {!otpSent ? (
+        <div className="form-box">
+          <h2>ثبت نام</h2>
+    
+          <input
+            type="text"
+            placeholder="نام خانوادگی"
+            value={lastName}
+            onChange={(e) => setLastName(e.target.value)}
+            required
+          />
+            <PhoneInput
+            country={'ir'}
+            value={phoneNumber}
+            onChange={(value) => setPhoneNumber(value)}
+            inputStyle={{
+              width: '100%',
+              borderRadius: '5px',
+              borderColor: '#ccc',
+              height: '40px',
+            }}
+          />
+          <button onClick={handleSendOtp}>ادامه</button>
+        </div>
+      ) : (
+        <div className="form-box">
+          <h2>تایید کد یکبار مصرف</h2>
+          <input
+            type="text"
+            placeholder="کد یکبار مصرف"
+            value={otp}
+            onChange={(e) => setOtp(e.target.value)}
+            required
+          />
+          <button onClick={handleVerifyOtp}>تایید</button>
+        </div>
+      )}
+    </div>
   );
-}
+};
 
-export default App;
-//login
+export default SignUpWithPhone;

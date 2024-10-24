@@ -9,7 +9,9 @@ import Footer from './footer/Footer';
 import ReservationPage from './rezevparstar/parstar';
 import NurseSelection from './NurseSelection/NurseSelection';
 import PaymentPage from './PaymentPage/PaymentPage'; // اضافه کردن صفحه پرداخت
+import Login from "./login/login"; // تغییر نام به Login
 import './App.css';
+
 
 function App() {
   // تعریف تابع انتخاب پرستار
@@ -34,13 +36,12 @@ function App() {
           <Route path="/rezevparstar/parstar" element={<ReservationPage />} />
           <Route path="/nurse-selection" element={<NurseSelection onSelectNurse={handleNurseSelect} />} />
           <Route path="/payment" element={<PaymentPage />} /> {/* مسیر صفحه پرداخت */}
+          <Route path="/login" element={<Login />} /> {/* مسیر صفحه ورود */}
         </Routes>
         <Footer />
       </div>
     </Router>
   );
 }
-
-
 
 export default App;

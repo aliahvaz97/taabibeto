@@ -4,10 +4,6 @@ import './header.css';
 const Header = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
 
-  // وضعیت شبیه‌سازی ورود کاربر
-  const isLoggedIn = false; // وضعیت ورود کاربر: true یا false
-  const userName = 'علی'; // نام کاربر شبیه‌سازی شده
-
   const toggleMenu = () => {
     setIsMenuOpen(!isMenuOpen);
   };
@@ -19,16 +15,11 @@ const Header = () => {
         <a href="/">taabibeto</a>
       </div>
 
-      {/* ورود و ثبت نام */}
+      {/* باتن ورود | ثبت نام */}
       <div className="auth-links">
-        {isLoggedIn ? (
-          <span className="user-name">{userName}</span>
-        ) : (
-          <>
-            <a href="#login">ورود</a>
-            <a href="#signup">ثبت نام</a>
-          </>
-        )}
+        <a href="/login">
+          <button type="button">ورود | ثبت نام</button>
+        </a>
       </div>
 
       {/* لینک‌های ناوبری */}
