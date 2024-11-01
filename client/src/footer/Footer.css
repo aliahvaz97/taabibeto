@@ -1,0 +1,167 @@
+.footer {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-around;
+  background-color: #1e1e1e;
+  color: #fff;
+  padding: 20px;
+  font-family: Vazir, sans-serif;
+  text-align: right; /* راست‌چین کردن متن‌ها */
+}
+
+.footer-section {
+  flex: 1;
+  margin: 15px;
+  min-width: 200px; /* حداقل عرض برای هر بخش */
+  text-align: right; /* تراز کردن متن‌ها به سمت راست */
+}
+
+.footer-section h3 {
+  color: #00ccff;
+  margin-bottom: 15px;
+}
+
+.footer-section p,
+.footer-section input,
+.footer-section button {
+  margin-bottom: 10px;
+}
+
+.footer-section input {
+  width: 100%;
+  padding: 10px;
+  border-radius: 5px;
+  border: none;
+}
+
+.footer-section button {
+  background-color: #00ccff;
+  color: #fff;
+  padding: 10px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.social-icons a {
+  color: #fff;
+  margin-right: 10px;
+  font-size: 20px;
+}
+
+.licenses {
+  text-align: center;
+}
+
+.licenses img {
+  width: 100px;
+  margin: 10px;
+}
+
+button.link-button {
+  background: none;
+  border: none;
+  color: #00aaff;
+  text-decoration: underline;
+  cursor: pointer;
+}
+
+/* تنظیم چیدمان بخش‌ها */
+.footer-section:nth-child(1) {
+  order: 1; /* بخش درباره تبیبتو */
+}
+
+.footer-section:nth-child(2) {
+  order: 2; /* بخش مجوزها */
+  text-align: center; /* تراز کردن متن بخش مجوزها به وسط */
+}
+
+.footer-section:nth-child(3) {
+  order: 3; /* بخش عضویت در خبرنامه */
+  text-align: left; /* تراز کردن متن بخش خبرنامه به چپ */
+}
+
+/* طراحی ریسپانسیو */
+@media (max-width: 768px) {
+  .footer {
+    flex-direction: column;
+    align-items: center;
+    text-align: center; /* راست‌چین در موبایل به مرکز تغییر می‌کند */
+  }
+
+  .footer-section {
+    width: 100%;
+    margin: 15px 0;
+    text-align: center; /* متن‌ها در نسخه موبایل وسط‌چین می‌شوند */
+  }
+
+  .licenses {
+    justify-content: center;
+    margin-top: 20px;
+  }
+
+  .licenses img {
+    width: 80px; /* تنظیم اندازه تصویر در نسخه موبایل */
+  }
+}
+.footer-container {
+  display: flex;
+  justify-content: space-around;
+  align-items: flex-start;
+  background-color: #1b1b1b;
+  color: #fff;
+  padding: 40px;
+  direction: rtl;
+}
+
+.footer-column h3 {
+  color: #00bfff;
+  margin-bottom: 15px;
+}
+
+.footer-column ul {
+  list-style: none;
+  padding: 0;
+}
+
+.footer-column ul li {
+  margin-bottom: 8px;
+}
+
+.licenses img {
+  width: 80px;
+  margin: 10px;
+}
+
+input[type="email"] {
+  width: 100%;
+  padding: 10px;
+  margin: 10px 0;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+}
+
+button {
+  background-color: #00bfff;
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.footer-bottom {
+  text-align: center;
+  margin-top: 30px;
+}
+
+.social-icons a img {
+  width: 30px;
+  margin: 0 10px;
+}
+.footer-copyright {
+  text-align: center;  /* وسط‌چین کردن متن */
+  width: 100%;         /* استفاده از کل عرض فوتر */
+  margin-top: 10px;    /* فاصله از سایر بخش‌ها */
+  font-size: 14px;
+}

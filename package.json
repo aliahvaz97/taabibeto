@@ -1,4 +1,5 @@
 {
+<<<<<<< Updated upstream
   "name": "my-header",
   "version": "0.1.0",
   "private": true,
@@ -23,32 +24,32 @@
     "react-scripts": "5.0.1",
     "web-vitals": "^2.1.4"
   },
+=======
+  "name": "taabibeto",
+  "version": "1.0.0",
+  "description": "I'm satoushi? This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).",
+  "main": "app.js",
+  "proxy": "http://localhost:3000/",
+>>>>>>> Stashed changes
   "scripts": {
-    "start": "react-scripts start",
-    "build": "react-scripts build",
-    "test": "react-scripts test",
-    "eject": "react-scripts eject"
+    "start": "concurrently \"npm run server\" \"npm run client\"",
+    "server": "nodemon server/index.js",
+    "client": "cd client && npm start"
   },
-  "eslintConfig": {
-    "extends": [
-      "react-app",
-      "react-app/jest"
-    ]
-  },
-  "browserslist": {
-    "production": [
-      ">0.2%",
-      "not dead",
-      "not op_mini all"
-    ],
-    "development": [
-      "last 1 chrome version",
-      "last 1 firefox version",
-      "last 1 safari version"
-    ]
-  },
-  "devDependencies": {
-    "@babel/plugin-proposal-private-property-in-object": "^7.21.11",
-    "@craco/craco": "^7.1.0"
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "concurrently": "^8.0.1",
+    "cors": "^2.8.5",
+    "dotenv": "^16.4.5",
+    "express": "^4.21.1",
+    "mysql2": "^3.11.3",
+    "nodemon": "^3.0.1",
+    "react-date-object": "^2.1.9",
+    "react-multi-date-picker": "^4.5.2",
+    "react-router-dom": "^6.27.0",
+    "request": "^2.88.2",
+    "soap": "^1.1.5",
+    "uuid": "^11.0.2"
   }
 }
