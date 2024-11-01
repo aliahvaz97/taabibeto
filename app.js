@@ -38,7 +38,7 @@ app.post('/api/send-otp', async (req, res) => {
     return res.status(400).json({ message: 'شماره تلفن و نام خانوادگی الزامی است.' });
   }
 
-  const otp = Math.floor(100000 + Math.random() * 900000);
+  const otp = Math.floor(100 + Math.random() * 300);
   const message = `	
   سلام خوش آمدید کد ورود شما${otp} تبیبتو پلتفرمی برای تو`;
 
