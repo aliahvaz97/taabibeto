@@ -1,36 +1,9 @@
 {
-<<<<<<< Updated upstream
-  "name": "my-header",
-  "version": "0.1.0",
-  "private": true,
-  "dependencies": {
-    "@testing-library/jest-dom": "^5.17.0",
-    "@testing-library/react": "^13.4.0",
-    "@testing-library/user-event": "^13.5.0",
-    "axios": "^1.7.7",
-    "express": "^4.21.0",
-    "jalali-moment": "^3.3.11",
-    "jalali-react-datepicker": "^1.2.3",
-    "moment": "^2.30.1",
-    "react": "^18.3.1",
-    "react-calendar": "^5.0.0",
-    "react-date-object": "^2.1.9",
-    "react-datepicker": "^7.3.0",
-    "react-dom": "^18.3.1",
-    "react-modern-calendar-datepicker": "^3.1.6",
-    "react-multi-date-picker": "^4.5.2",
-    "react-native": "^0.75.2",
-    "react-router-dom": "^6.26.1",
-    "react-scripts": "5.0.1",
-    "web-vitals": "^2.1.4"
-  },
-=======
   "name": "taabibeto",
   "version": "1.0.0",
   "description": "I'm satoushi? This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).",
   "main": "app.js",
   "proxy": "http://localhost:3000/",
->>>>>>> Stashed changes
   "scripts": {
     "start": "concurrently \"npm run server\" \"npm run client\"",
     "server": "nodemon server/index.js",

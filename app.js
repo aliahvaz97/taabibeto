@@ -40,7 +40,7 @@ app.post('/api/send-otp', async (req, res) => {
 
   const otp = Math.floor(100000 + Math.random() * 900000);
   const message = `	
-  سلام خوش آمدید کد ورود شما${otp} یولایکت`;
+  سلام خوش آمدید کد ورود شما${otp} تبیبتو پلتفرمی برای تو`;
 
   try {
     await sendSms(phoneNumber, message);
