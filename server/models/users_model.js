@@ -1,15 +1,16 @@
 const pool = require('../utilities/database')
 
 class UsersModel {
-    static getUser = async(id) => {
-        const [result] = await pool.query('select * from user_db where Id=?',[id]);
-        return result[0];
-        };
-    static insertUser = async(full_name,phone_number) => {
-        const [result] = await pool.query('insert into user_db (full_name,phone_number) value(?,?)',[full_name,phone_number]);
-        console.log(result.insertId)
+    static insertUser = async(fullname,phonenumber,password) => {
+        const [result] = await pool.query('insert into users (Id,FullName,PhoneNumber,Password) values(uuid(),?,?,?)',
+            [fullname,phonenumber,password]);
         return result
     };
+    static getUserByPhoneNumber = async(phonenumber) => {
+        const [result] = await pool.query('select * from users where PhoneNumber=?',[phonenumber]);
+        return result[0];
+        };
+   
 };
 
 module.exports = UsersModel;
