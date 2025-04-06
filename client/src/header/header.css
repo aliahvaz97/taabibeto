@@ -834,3 +834,26 @@ body {
   margin-right: 10px; /* فاصله از سمت راست */
 }
 }
+/* تنظیم برای حالت موبایل */
+@media (max-width: 768px) {
+  .login-btn {
+    position: relative;
+    top: -20px; /* افزایش مقدار برای بالا بردن بیشتر */
+    margin-top: 20px; /* فاصله بیشتر از بالا */
+    font-size: 14px; /* تناسب اندازه فونت */
+    padding: 6px 12px; /* تناسب فضای داخلی */
+  }
+
+  .navbar {
+    flex-direction: column; /* چینش عمودی عناصر */
+    align-items: flex-start; /* قرار گرفتن عناصر در یک سمت */
+  }
+
+  .menu-icon {
+    margin-bottom: 15px; /* افزایش فاصله بین آیکون منو و دکمه */
+  }
+}
+.user-name {
+  color: black; /* تغییر رنگ به سیاه */
+}
+

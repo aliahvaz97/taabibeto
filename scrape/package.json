@@ -1,0 +1,36 @@
+{
+  "name": "scrape",
+  "version": "1.0.0",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "description": "",
+  "dependencies": {
+    "@google-cloud/vision": "^4.3.2",
+    "@tensorflow-models/mobilenet": "^2.1.1",
+    "@tensorflow/tfjs": "^4.22.0",
+    "@tensorflow/tfjs-node": "^3.0.0",
+    "@tensorflow/tfjs-node-gpu": "^4.22.0",
+    "axios": "^1.7.9",
+    "cheerio": "^1.0.0",
+    "chromedriver": "^133.0.0",
+    "dotenv": "^16.4.7",
+    "fs": "^0.0.1-security",
+    "jimp": "^1.6.0",
+    "node-telegram-bot-api": "^0.63.0",
+    "puppeteer": "^24.1.1",
+    "puppeteer-core": "^24.2.0",
+    "puppeteer-extra": "^3.3.6",
+    "puppeteer-extra-plugin-stealth": "^2.11.2",
+    "readline-sync": "^1.4.10",
+    "rimraf": "^6.0.1",
+    "selenium-webdriver": "^4.28.1",
+    "sharp": "^0.33.5",
+    "telegraf": "^4.16.3",
+    "xlsx": "^0.18.5"
+  }
+}

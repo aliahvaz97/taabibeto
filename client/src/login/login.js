@@ -1,107 +1,139 @@
-import React, { useState } from 'react';
-import PhoneInput from 'react-phone-input-2';
-import 'react-phone-input-2/lib/style.css';
-import './login.css';
-import axios from 'axios';
+import React, { useState, useEffect } from "react";
+import PhoneInput from "react-phone-input-2";
+import "react-phone-input-2/lib/style.css";
+import axios from "axios";
+import { useNavigate } from "react-router-dom";
 
-const SignUpWithPhone = ({ onLoginSuccess }) => {
-  const [phoneNumber, setPhoneNumber] = useState('');
-  const [lastName, setLastName] = useState('');
+const OtpLogin = () => {
+  const [phoneNumber, setPhoneNumber] = useState("");
+  const [otp, setOtp] = useState("");
   const [otpSent, setOtpSent] = useState(false);
-  const [otp, setOtp] = useState('');
-  const [message, setMessage] = useState(''); // برای نمایش پیام‌ها
-  const [loading, setLoading] = useState(false); // برای مدیریت وضعیت بارگذاری
+  const [loading, setLoading] = useState(false);
+  const [message, setMessage] = useState("");
+  const [timer, setTimer] = useState(0);
+  const navigate = useNavigate();
 
-  // تابع ارسال کد OTP
   const handleSendOtp = async () => {
-    if (phoneNumber && lastName) {
-      setLoading(true); // فعال کردن حالت بارگذاری
-      try {
-        const response = await axios.post('/api/send-otp', { phoneNumber, lastName });
-        setOtpSent(true); // اگر ارسال موفق بود، وضعیت otpSent تغییر می‌کند
-        setMessage(response.data.message); // پیام موفقیت را نمایش می‌دهد
-      } catch (error) {
-        console.error('Error sending OTP:', error);
-        setMessage(error.response?.data?.message || 'خطا در ارسال کد تایید.'); // نمایش پیام خطا
-      } finally {
-        setLoading(false); // غیرفعال کردن حالت بارگذاری
+    if (!phoneNumber) {
+      setMessage("لطفاً شماره تلفن را وارد کنید.");
+      return;
+    }
+
+    setLoading(true);
+    setMessage("");
+
+    try {
+      const response = await axios.post("http://localhost:4000/api/send-otp", {
+        phoneNumber,
+      });
+
+      if (response.status === 200) {
+        setOtpSent(true);
+        setTimer(60);
+        setMessage("کد OTP با موفقیت ارسال شد.");
+      } else {
+        setMessage("مشکلی در ارسال کد پیش آمده است.");
       }
-    } else {
-      setMessage('لطفاً شماره تلفن و نام خانوادگی را وارد کنید.');
+    } catch (error) {
+      setMessage("مشکلی در ارسال کد رخ داد.");
+    } finally {
+      setLoading(false);
     }
   };
 
-  // تابع تایید کد OTP
   const handleVerifyOtp = async () => {
     if (!otp) {
-      setMessage('لطفاً کد یکبار مصرف را وارد کنید.');
+      setMessage("لطفاً کد OTP را وارد کنید.");
       return;
     }
 
-    if (!/^\d{6}$/.test(otp)) { // بررسی اینکه کد OTP دقیقاً 6 رقم باشد
-      setMessage('کد یکبار مصرف باید 6 رقم باشد.');
-      return;
-    }
+    setLoading(true);
+    setMessage("");
 
-    setLoading(true); // فعال کردن حالت بارگذاری
     try {
-      const response = await axios.post('/api/verify-otp', { phoneNumber, otp }); // ارسال درخواست تایید کد OTP
-      setMessage(response.data.message); // نمایش پیام موفقیت پس از تایید
-      onLoginSuccess(); // اگر تایید موفقیت‌آمیز بود، به تابع موفقیت ورود می‌فرستد
+      const response = await axios.post("http://localhost:4000/api/verify-otp", {
+        phoneNumber,
+        otp,
+      });
+
+      if (response.status === 200) {
+        localStorage.setItem("authToken", response.data.token);
+        setMessage("ورود با موفقیت انجام شد.");
+        navigate("/rezevparstar/parstar");
+      } else {
+        setMessage("کد یک بار مصرف نادرست است.");
+      }
     } catch (error) {
-      console.error('Error verifying OTP:', error); // لاگ خطا در کنسول
-      setMessage(error.response?.data?.message || 'کد یکبار مصرف نامعتبر است.'); // نمایش پیام خطا در صورت بروز مشکل
+      setMessage("مشکلی در تایید کد رخ داد.");
     } finally {
-      setLoading(false); // غیرفعال کردن حالت بارگذاری پس از اتمام عملیات
+      setLoading(false);
     }
   };
 
+  useEffect(() => {
+    if (timer > 0) {
+      const countdown = setTimeout(() => setTimer((prev) => prev - 1), 1000);
+      return () => clearTimeout(countdown);
+    }
+  }, [timer]);
+
+  useEffect(() => {
+    const token = localStorage.getItem("authToken");
+    if (token) {
+      navigate("/rezevparstar/parstar");
+    }
+  }, [navigate]);
+
   return (
-    <div className="signup-container">
-      <div className="form-box">
-        <h2>{otpSent ? 'تایید کد یکبار مصرف' : 'ثبت نام'}</h2>
-        {message && <p className="message">{message}</p>} {/* نمایش پیام‌ها */}
-        {!otpSent ? (
+    <div className="flex flex-col items-center justify-center h-screen bg-gray-100 p-4">
+      <div className="bg-white p-6 rounded-2xl shadow-lg w-full max-w-md">
+        <h2 className="text-center text-lg font-semibold mb-4 text-gray-700">
+          لطفاً شماره موبایل خود را برای ارسال کد فعال‌سازی وارد کنید.
+        </h2>
+        <div className="flex items-center border rounded-lg overflow-hidden shadow-sm">
+          <PhoneInput
+            country={"ir"}
+            value={phoneNumber}
+            onChange={setPhoneNumber}
+            inputClass="w-full py-2 px-3 focus:outline-none"
+            containerClass="flex-1"
+          />
+          <div className="bg-gray-200 px-3 py-2 flex items-center border-l">
+            <span className="fi fi-ir"></span>
+          </div>
+        </div>
+        <button
+          className={`mt-4 w-full py-2 rounded-lg ${loading ? "bg-gray-400" : "bg-blue-500 text-white"}`}
+          onClick={handleSendOtp}
+          disabled={loading}
+        >
+          {loading ? "در حال ارسال..." : "ارسال کد یک بار مصرف"}
+        </button>
+
+        {otpSent && (
           <>
             <input
               type="text"
-              placeholder="نام خانوادگی"
-              value={lastName}
-              onChange={(e) => setLastName(e.target.value)}
-              required
-            />
-            <PhoneInput
-              country={'ir'}
-              value={phoneNumber}
-              onChange={(value) => setPhoneNumber(value)}
-              inputStyle={{
-                width: '100%',
-                borderRadius: '5px',
-                borderColor: '#ccc',
-                height: '40px',
-              }}
-            />
-            <button onClick={handleSendOtp} disabled={loading}>
-              {loading ? 'در حال ارسال...' : 'ادامه'}
-            </button>
-          </>
-        ) : (
-          <>
-            <input
-              type="text"
-              placeholder="کد یکبار مصرف"
               value={otp}
               onChange={(e) => setOtp(e.target.value)}
-              required
+              placeholder="کد یک بار مصرف را وارد کنید"
+              className="w-full mt-4 py-2 px-3 border rounded-lg"
             />
-            <button onClick={handleVerifyOtp} disabled={loading}>
-              {loading ? 'در حال تایید...' : 'تایید'}
+            <button
+              className={`mt-2 w-full py-2 rounded-lg ${loading ? "bg-gray-400" : "bg-green-500 text-white"}`}
+              onClick={handleVerifyOtp}
+              disabled={loading}
+            >
+              {loading ? "در حال تایید..." : "تایید کد یک بار مصرف"}
             </button>
+            {timer > 0 && <p className="text-center text-sm text-gray-600 mt-2">زمان باقی‌مانده: {timer} ثانیه</p>}
           </>
         )}
+
+        {message && <p className="text-center text-sm text-red-500 mt-2">{message}</p>}
       </div>
     </div>
   );
 };
 
-export default SignUpWithPhone;
+export default OtpLogin;

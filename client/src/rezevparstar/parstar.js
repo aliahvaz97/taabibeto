@@ -11,11 +11,12 @@ const BookingForm = () => {
     phone: '',
     date: null,
     time: '',
-    address: '',
+    address: '',  // فیلد آدرس
     notes: ''
   });
 
   const [isCalendarOpen, setCalendarOpen] = useState(false);
+  const [loading, setLoading] = useState(false); // برای نمایش لودر در هنگام ارسال
   const calendarRef = useRef(null);
   const navigate = useNavigate();
 
@@ -32,44 +33,48 @@ const BookingForm = () => {
   };
 
   const handleDateChange = (date) => {
-    setFormData({
-      ...formData,
+    setFormData((prevFormData) => ({
+      ...prevFormData,
       date: date
-    });
+    }));
     setCalendarOpen(false);
   };
 
   const handleTimeChange = (e) => {
-    setFormData({
-      ...formData,
+    setFormData((prevFormData) => ({
+      ...prevFormData,
       time: e.target.value
-    });
+    }));
   };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
 
+    setLoading(true); // فعال کردن لودر
     try {
-      const response = await fetch('/api/send-otp', {
+      // ارسال درخواست به بک‌اند برای ثبت رزرو
+      const response = await fetch('/api/reservations', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify({
-          phoneNumber: formData.phone,
-          lastName: formData.name,
-        }),
+        body: JSON.stringify(formData),
       });
 
       const data = await response.json();
+
       if (response.ok) {
-        console.log(data.message);
-        navigate('/nurse-selection');
+        // نمایش پیام موفقیت
+        navigate('/NurseSelection'); // هدایت به صفحه انتخاب پرستار
       } else {
-        console.error(data.message);
+        // نمایش پیام خطا
+        alert('مشکلی در ثبت رزرو وجود دارد: ' + data.message);
       }
     } catch (error) {
-      console.error('Error submitting form:', error);
+      console.error('خطا در ارسال فرم:', error);
+      alert('مشکلی در اتصال به سرور وجود دارد. لطفاً دوباره تلاش کنید.');
+    } finally {
+      setLoading(false); // غیرفعال کردن لودر
     }
   };
 
@@ -190,7 +195,9 @@ const BookingForm = () => {
           style={textareaStyle}
         ></textarea>
       </div>
-      <button type="submit" style={buttonStyle}>ادامه</button>
+      <button type="submit" style={buttonStyle} disabled={loading}>
+        {loading ? 'در حال ارسال...' : 'ادامه'}
+      </button>
     </form>
   );
 };

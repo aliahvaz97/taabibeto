@@ -1,4 +1,5 @@
 /* تنظیمات اصلی برای همه‌ی صفحات */
+
 body {
   font-family: 'Vazir', sans-serif;
   direction: rtl;
@@ -7,6 +8,7 @@ body {
   padding: 0;
   background-color: #f7f7f7;
   overflow-x: hidden; /* مخفی کردن overflow افقی */
+  padding-top: 80px; /* فاصله از هدر برای محتوای اصلی */
 }
 
 /* استایل‌دهی به کانتینر اصلی */
@@ -94,17 +96,17 @@ button {
 /* رسپانسیو برای موبایل */
 @media (max-width: 768px) {
   .container {
-    flex-direction: column;
+    flex-direction: column; /* تغییر به حالت ستونی */
     padding: 20px; /* افزایش padding برای موبایل */
   }
 
   .image-container, .text-container {
-    width: 100%;
-    text-align: center;
+    width: 100%; /* عرض کامل */
+    text-align: center; /* مرکز کردن متن */
   }
 
   .buttons {
-    flex-direction: column;
+    flex-direction: column; /* تغییر به حالت ستونی */
     gap: 10px; /* کاهش فاصله در موبایل */
   }
 
@@ -134,118 +136,133 @@ button {
   box-sizing: border-box;
 }
 
-/* استایل‌های مخصوص موبایل */
-@media (max-width: 600px) {
-  .reservation-container {
-    padding: 10px;
-    font-size: 14px;
-  }
-
-  input, textarea, button {
-    width: 100%;
-    margin-bottom: 10px;
-  }
-}
-
-/* استایل هدر */
-.header {
-  background-color: #fff; /* رنگ دلخواه */
-  padding: 20px;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-  position: fixed; /* اگر می‌خواهید هدر ثابت باشد */
-  top: 0;
-  left: 0;
-  right: 0;
-  z-index: 1000; /* اطمینان از اینکه هدر بالای بقیه محتوا قرار گیرد */
-}
-
 /* استایل فوتر */
 .footer {
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: space-between;
-  background-color: #1e1e1e;
-  color: #fff;
+  display: flex; /* استفاده از flexbox */
+  justify-content: space-between; /* توزیع یکنواخت عناصر */
+  align-items: center;
   padding: 20px;
-  font-family: 'Vazir', sans-serif;
-  position: relative; /* موقعیت نسبی */
-  width: 100%; /* عرض کامل */
+  background-color: #f7f7f7;
+  color: #333;
+  font-size: 0.875rem;
 }
 
-/* استایل بخش‌های فوتر */
-.footer-section {
-  flex: 1; /* یا مقدار دلخواه */
-  margin: 15px;
-  min-width: 200px; /* حداقل عرض برای هر بخش */
-  text-align: right; /* تراز کردن متن‌ها به سمت راست */
+.footer a {
+  text-decoration: none;
+  color: #2563eb;
 }
 
-.footer-section h3 {
-  color: #00ccff;
-  margin-bottom: 15px;
+.footer a:hover {
+  text-decoration: underline;
 }
 
-.footer-section p,
-.footer-section input,
-.footer-section button {
-  margin-bottom: 10px;
+.footer .right {
+  text-align: right;
 }
 
-.footer-section input {
-  width: 100%;
-  padding: 10px;
-  border-radius: 5px;
-  border: none;
-}
-
-.footer-section button {
-  background-color: #00ccff;
-  color: #fff;
-  padding: 10px;
-  border: none;
-  border-radius: 5px;
-  cursor: pointer;
-}
-
-.social-icons a {
-  color: #fff;
-  margin-right: 10px;
-  font-size: 20px;
-}
-
-.licenses {
+.footer .center {
   text-align: center;
 }
 
-.licenses img {
-  width: 100px;
-  margin: 10px;
+.footer .left {
+  text-align: left;
 }
-
-button.link-button {
-  background: none;
-  border: none;
-  color: #00aaff;
-  text-decoration: underline;
-  cursor: pointer;
-}
-
-/* طراحی ریسپانسیو */
+/* استایل رسپانسیو برای هدر */
 @media (max-width: 768px) {
-  .footer {
-    flex-direction: column;
-    align-items: center;
+  .header {
+    padding: 10px 15px; /* کاهش فضای داخلی برای موبایل */
+    text-align: center; /* تراز کردن محتوای هدر در مرکز */
   }
 
-  .footer-section {
-    width: 100%;
-    text-align: center; /* متن‌ها در نسخه موبایل وسط‌چین می‌شوند */
-    margin: 15px 0;
+  .header .logo {
+    margin-bottom: 10px; /* فاصله بین لوگو و سایر آیتم‌ها */
   }
 
-  .licenses {
-    justify-content: center;
-    margin-top: 20px;
+  .header .nav {
+    flex-direction: column; /* تغییر به حالت ستونی */
+    gap: 10px; /* فاصله بین آیتم‌های ناوبری */
+    align-items: center; /* مرکز کردن آیتم‌ها */
+  }
+}
+
+/* برای نمایش در تبلت‌ها */
+@media (max-width: 1024px) and (min-width: 769px) {
+  .header {
+    padding: 15px 20px; /* فضای متناسب برای تبلت */
+  }
+
+  .header .nav {
+    justify-content: center; /* آیتم‌های ناوبری در وسط */
+  }
+}
+/* استایل کلی هدر */
+.header {
+  background-color: #fff; /* رنگ پس‌زمینه هدر */
+  padding: 20px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  position: fixed; /* ثابت بودن هدر */
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 1000;
+  display: flex;
+  justify-content: space-between; /* آیتم‌ها در دو طرف */
+  align-items: center;
+  width: 100%;
+}
+
+/* استایل برای لوگو */
+.header .logo {
+  font-size: 1.5rem;
+  font-weight: bold;
+  color: #333;
+}
+
+/* استایل برای ناوبری */
+.header .nav {
+  display: flex;
+  gap: 20px;
+  list-style: none;
+}
+
+.header .nav a {
+  text-decoration: none;
+  color: #333;
+  font-size: 1rem;
+}
+
+.header .nav a:hover {
+  color: #007bff;
+}
+
+/* رسپانسیو برای موبایل */
+@media (max-width: 768px) {
+  .header {
+    padding: 10px 15px; /* کاهش padding برای موبایل */
+    flex-direction: column; /* تغییر به حالت ستونی */
+    align-items: center; /* مرکز کردن آیتم‌ها */
+    text-align: center;
+  }
+
+  .header .logo {
+    margin-bottom: 10px; /* فاصله بیشتر بین لوگو و ناوبری */
+  }
+
+  .header .nav {
+    flex-direction: column; /* ناوبری به صورت عمودی */
+    gap: 10px; /* کاهش فاصله بین آیتم‌های ناوبری */
+  }
+}
+
+/* برای تبلت‌ها */
+@media (max-width: 1024px) and (min-width: 769px) {
+  .header {
+    padding: 15px 20px;
+  }
+
+  .header .nav {
+    justify-content: center; /* ناوبری در مرکز */
+    gap: 15px; /* فاصله معقول بین آیتم‌ها */
   }
 }
 /* تنظیمات اصلی برای همه‌ی صفحات */
@@ -262,7 +279,7 @@ body {
 
 /* استایل هدر */
 .header {
-  background-color: #fff; /* یا رنگ دلخواه */
+  background-color: #fff; /* رنگ دلخواه */
   padding: 20px;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
   position: fixed; /* ثابت بودن هدر */
@@ -270,64 +287,292 @@ body {
   left: 0;
   right: 0;
   z-index: 1000; /* اطمینان از اینکه هدر بالای بقیه محتوا قرار گیرد */
+  display: flex; /* استفاده از flexbox برای چیدمان */
+  justify-content: space-between; /* فاصله بین عناصر */
+  align-items: center; /* تراز کردن عمودی عناصر */
 }
 
-/* استایل‌دهی به کانتینر اصلی */
-.reservation-container {
-  max-width: 1200px;
-  margin: 0 auto;
-  padding: 20px;
+/* استایل لوگو */
+.logo {
+  font-size: 1.5rem;
+  font-weight: bold;
+  color: #00aaff;
+  text-decoration: none;
 }
 
-/* استایل‌دهی به کانتینر */
-.container {
+/* استایل منو */
+.nav-links {
   display: flex;
-  flex-direction: row-reverse; /* برای راست‌چین کردن */
-  justify-content: space-between;
-  align-items: center;
-  padding: 40px 20px;
-  background-color: white;
+  gap: 15px; /* فاصله بین لینک‌ها */
 }
 
-/* ادامه سایر استایل‌ها... */
-/* استایل فوتر */
-.footer {
-  display: flex; /* یا grid */
-  justify-content: space-between; /* یا center بسته به طراحی شما */
-  align-items: center;
-  padding: 20px; /* فضای داخلی فوتر */
-  margin: 0; /* تنظیم margin به صفر */
-  background-color: #333; /* رنگ پس‌زمینه */
-  color: white; /* رنگ متن */
-  position: relative; /* موقعیت نسبی */
-  bottom: 0; /* در صورت نیاز */
-  width: 100%; /* عرض کامل */
+.nav-links a {
+  color: #333;
+  text-decoration: none;
+  font-size: 1rem;
 }
 
-/* استایل بخش‌های فوتر */
-.footer .footer-section {
-  flex: 1; /* یا مقدار دلخواه */
-  text-align: right; /* برای متن راست‌چین */
+.nav-links a:hover {
+  color: #00aaff;
 }
 
-/* استایل برای لینک‌های فوتر */
-.footer a {
-  color: white; /* رنگ لینک‌ها */
-  text-decoration: none; /* حذف زیرخط لینک‌ها */
+/* دکمه همبرگری برای موبایل */
+.menu-toggle {
+  display: none; /* پنهان کردن در نمایشگرهای بزرگ */
+  flex-direction: column;
+  cursor: pointer;
 }
 
-.footer a:hover {
-  text-decoration: underline; /* زیرخط در حالت hover */
+.menu-toggle .bar {
+  width: 25px;
+  height: 3px;
+  background-color: #333;
+  margin: 3px 0;
 }
 
 /* رسپانسیو برای موبایل */
-@media (max-width: 600px) {
-  .footer {
-    flex-direction: column; /* تغییر جهت به صورت ستونی در موبایل */
-    text-align: center; /* مرکز کردن متن */
+@media (max-width: 768px) {
+  .nav-links {
+    display: none; /* پنهان کردن منو در حالت موبایل */
+    flex-direction: column; /* چیدمان عمودی */
+    position: absolute;
+    top: 60px; /* فاصله از بالای هدر */
+    right: 0;
+    width: 100%;
+    background-color: #fff;
+    padding: 15px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    text-align: right; /* تراز کردن متن به سمت راست */
   }
 
-  .footer .footer-section {
-    margin-bottom: 10px; /* فاصله بین بخش‌های فوتر */
+  .nav-links.open {
+    display: flex; /* نمایش منو در حالت باز */
   }
+
+  .menu-toggle {
+    display: flex; /* نمایش دکمه همبرگری */
+  }
+
+  .header {
+    flex-direction: row; /* چیدمان افقی در حالت موبایل */
+    align-items: center; /* تراز کردن عمودی عناصر */
+  }
+
+  .logo {
+    flex: 1; /* اجازه می‌دهد که لوگو در وسط قرار گیرد */
+    text-align: center; /* متن لوگو را در وسط قرار می‌دهد */
+  }
+}
+/* تنظیمات کلی */
+body {
+  font-family: Vazir, Arial, sans-serif;
+  direction: rtl; /* راست‌چین */
+  margin: 0;
+  padding: 0;
+}
+
+/* استایل هدر */
+.header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 10px 15px;
+  background-color: #fff;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  position: sticky;
+  top: 0;
+  z-index: 100;
+}
+
+/* استایل لوگو */
+.logo {
+  flex: 1;
+  text-align: center;
+}
+
+.logo a {
+  font-size: 20px;
+  color: #00c2ff;
+  font-weight: bold;
+  text-decoration: none;
+}
+
+/* دکمه همبرگری */
+.menu-toggle {
+  display: none; /* پیش‌فرض مخفی */
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+  margin-right: 10px;
+}
+
+.menu-toggle div {
+  width: 25px;
+  height: 3px;
+  background-color: #333;
+  margin: 3px 0;
+}
+
+/* لینک‌های ناوبری */
+.nav-links {
+  display: flex;
+  flex-direction: row;
+  gap: 15px;
+  text-align: right;
+}
+
+.nav-links a {
+  text-decoration: none;
+  color: #333;
+  font-size: 16px;
+}
+
+/* منوی باز در حالت موبایل */
+.nav-links.open {
+  display: flex;
+  flex-direction: column;
+  position: absolute;
+  top: 60px;
+  right: 0;
+  width: 100%;
+  background-color: #fff;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.nav-links.open a {
+  padding: 10px 15px;
+  border-bottom: 1px solid #f0f0f0;
+}
+
+/* دکمه کاربر */
+.user-menu {
+  display: flex;
+  align-items: center;
+}
+
+.user-button {
+  display: flex;
+  align-items: center;
+  background: none;
+  border: none;
+  cursor: pointer;
+  font-size: 16px;
+  color: #333;
+}
+
+.user-name {
+  margin-left: 8px;
+}
+
+.user-icon {
+  font-size: 18px;
+}
+
+/* حالت موبایل */
+@media (max-width: 768px) {
+  .menu-toggle {
+    display: flex; /* نمایش دکمه همبرگری */
+  }
+
+  .nav-links {
+    display: none; /* مخفی کردن لینک‌ها */
+  }
+
+  .nav-links.open {
+    display: flex; /* نمایش منو در حالت باز */
+  }
+
+  .user-menu {
+    order: 3;
+  }
+
+  .logo {
+    order: 2;
+    flex: 1;
+  }
+
+  .menu-toggle {
+    order: 1;
+  }
+}
+
+/* استایل رسپانسیو برای هدر */
+@media (max-width: 768px) {
+  .header {
+    padding: 10px 15px; /* کاهش padding برای موبایل */
+    flex-direction: column; /* تغییر به حالت ستونی */
+    align-items: center; /* مرکز کردن آیتم‌ها */
+    text-align: center; /* تراز کردن متن به مرکز */
+  }
+
+  .header .logo {
+    margin-bottom: 10px; /* فاصله بیشتر بین لوگو و ناوبری */
+    flex: none; /* جلوگیری از گسترش لوگو */
+  }
+
+  .header .nav {
+    flex-direction: column; /* ناوبری به صورت عمودی */
+    gap: 10px; /* کاهش فاصله بین آیتم‌های ناوبری */
+    align-items: center; /* مرکز کردن آیتم‌ها */
+  }
+}
+/* تنظیم برای حالت موبایل */
+@media (max-width: 768px) {
+  .login-btn {
+    position: relative;
+    top: -20px; /* افزایش مقدار برای بالا بردن بیشتر */
+    margin-top: 20px; /* فاصله بیشتر از بالا */
+    font-size: 14px; /* تناسب اندازه فونت */
+    padding: 6px 12px; /* تناسب فضای داخلی */
+  }
+
+  .navbar {
+    flex-direction: column; /* چینش عمودی عناصر */
+    align-items: flex-start; /* قرار گرفتن عناصر در یک سمت */
+  }
+
+  .menu-icon {
+    margin-bottom: 15px; /* افزایش فاصله بین آیکون منو و دکمه */
+  }
+}
+.header {
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+
+}
+
+
+
+/* رسپانسیو برای موبایل */
+@media (max-width: 768px) {
+  .nav-links {
+    display: none; /* پنهان کردن منو در حالت موبایل */
+    flex-direction: column;
+    position: absolute;
+    top: 60px; /* فاصله از بالای هدر */
+    right: 0;
+    width: 100%;
+    background-color: #fff;
+    padding: 15px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  }
+
+  .nav-links.open {
+    display: flex; /* نمایش منو در حالت باز */
+  }
+
+  .menu-toggle {
+    display: flex; /* نمایش دکمه همبرگری */
+  }
+}
+.user-name {
+  margin-left: 8px;
+  color: #000; /* تغییر رنگ به مشکی */
+}
+header {
+  background-color: #0af;
+  box-shadow: 0 4px 6px #0000001a;
+  color: #000000;
+  padding: 1rem;
+  text-align: center;
 }

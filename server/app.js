@@ -8,11 +8,34 @@ require('dotenv').config();
 const app = express();
 const port = process.env.PORT || 3000;
 
+const mongoose = require('mongoose');
+const ElderInfo = require('./server/models/elderInfo');
+const Request = require('./server/models/request');
+const nurse = require("./nurse.model")
+
+// وارد کردن روت‌ها و کنترلر OTP
+const otpRoutes = require('./routes/otpRoutes');
+
+mongoose
+  .connect(process.env.MONGO_URI, { useNewUrlParser: true, useUnifiedTopology: true })
+  .then(() => console.log('Connected to MongoDB successfully!'))
+  .catch((err) => console.error('Failed to connect to MongoDB:', err));
+
+// تعریف مدل رزرو
+const bookingSchema = new mongoose.Schema({
+  name: { type: String, required: true },
+  phoneNumber: { type: String, required: true },
+  serviceType: { type: String, required: true },
+  city: { type: String, required: true },
+  description: { type: String },
+  nationalId: { type: String },
+  createdAt: { type: Date, default: Date.now },
+});
+
+const Booking = mongoose.model('Booking', bookingSchema);
+
 app.use(cors());
 app.use(bodyParser.json());
-
-// متغیر برای ذخیره OTP
-let otpStorage = {}; // این متغیر برای ذخیره OTP به صورت موقت استفاده می‌شود
 
 // تابع ارسال SMS
 const sendSms = async (phoneNumber, message) => {
@@ -27,90 +50,119 @@ const sendSms = async (phoneNumber, message) => {
     console.log('SMS sent successfully:', response.data);
   } catch (error) {
     console.error('Error sending SMS:', error.response ? error.response.data : error.message);
-    throw new Error('خطا در ارسال پیامک.'); // خطا را به بیرون پرتاب کنید
+    throw new Error('خطا در ارسال پیامک.');
   }
 };
 
-// روت برای ارسال OTP
-app.post('/api/send-otp', async (req, res) => {
-  const { phoneNumber, lastName } = req.body;
-
-  if (!phoneNumber || !lastName) {
-    return res.status(400).json({ message: 'شماره تلفن و نام خانوادگی الزامی است.' });
-  }
-
-  const otp = Math.floor(100000 + Math.random() * 900000);
-  const message = `سلام خوش آمدید کد ورود شما ${otp} است.`;
-
-  try {
-    await sendSms(phoneNumber, message);
-    console.log(`OTP for ${phoneNumber}:`, otp); // چاپ کد OTP
-
-    // ذخیره OTP به مدت یک دقیقه
-    otpStorage[phoneNumber] = otp;
-    setTimeout(() => {
-      delete otpStorage[phoneNumber]; // حذف OTP بعد از یک دقیقه
-    }, 60 * 1000); // 60 ثانیه
-
-    res.status(200).json({ message: 'کد تایید به شماره تلفن ارسال شد.' });
-  } catch (error) {
-    return res.status(500).json({ message: 'خطا در ارسال کد تایید.' });
-  }
-});
-
-// روت برای تأیید کد OTP
-app.post('/api/verify-otp', (req, res) => {
-  const { phoneNumber, otp } = req.body;
-
-  if (!phoneNumber || !otp) {
-    return res.status(400).json({ message: 'شماره تلفن و کد OTP الزامی است.' });
-  }
-
-  // بررسی صحت کد OTP
-  console.log(`Verifying OTP for ${phoneNumber}:`, otp); // چاپ کد وارد شده
-
-  if (otpStorage[phoneNumber]) {
-    if (otpStorage[phoneNumber] === otp) {
-      delete otpStorage[phoneNumber]; // حذف OTP بعد از تأیید
-      return res.status(200).json({ message: 'ورود موفقیت‌آمیز بود.' });
-    } else {
-      return res.status(400).json({ message: 'کد تایید معتبر نیست.' });
-    }
-  } else {
-    return res.status(400).json({ message: 'کد تایید منقضی شده است.' });
-  }
-});
-
-// روت برای دریافت و ذخیره اطلاعات رزرو
+// روت ذخیره رزرو
 app.post('/api/bookings', async (req, res) => {
-  const bookingData = req.body;
+  const { name, phoneNumber, serviceType, city, description, nationalId } = req.body;
 
-  // نمایش اطلاعات در کنسول برای اطمینان از دریافت درست اطلاعات
-  console.log('اطلاعات رزرو دریافتی:', bookingData);
-
-  res.status(201).json({ message: 'رزرو با موفقیت ذخیره شد.' });
-});
-
-// روت برای تایید پرداخت
-app.post('/api/verify-payment', async (req, res) => {
-  const { trackId } = req.body;
+  if (!name || !phoneNumber || !serviceType || !city) {
+    return res.status(400).json({ message: 'تمامی فیلدهای ضروری را پر کنید.' });
+  }
 
   try {
-    const response = await axios.post('https://api.zibal.ir/v1/verify', {
-      merchant: 'aa437cc147d74e0c881896462f67fe1b',
-      trackId: trackId
+    const newBooking = new Booking({
+      name,
+      phoneNumber,
+      serviceType,
+      city,
+      description,
+      nationalId,
     });
 
-    if (response.data.result === 100) {
-      res.status(200).json({ message: 'پرداخت موفقیت‌آمیز بود.' });
-    } else {
-      res.status(400).json({ message: 'پرداخت ناموفق بود.', error: response.data.message });
-    }
+    await newBooking.save();
+
+    console.log('رزرو جدید ثبت شد:', newBooking);
+    res.status(201).json({ message: 'رزرو با موفقیت ثبت شد.', booking: newBooking });
   } catch (error) {
-    console.error('خطا در تایید پرداخت:', error);
-    res.status(500).json({ message: 'خطا در تایید پرداخت.' });
+    console.error('Error saving booking:', error.message);
+    res.status(500).json({ message: 'خطا در ذخیره رزرو.' });
   }
 });
+
+// روت دریافت لیست رزروها
+app.get('/api/bookings', async (req, res) => {
+  try {
+    const bookings = await Booking.find().sort({ createdAt: -1 });
+    res.status(200).json(bookings);
+  } catch (error) {
+    console.error('Error fetching bookings:', error.message);
+    res.status(500).json({ message: 'خطا در دریافت رزروها.' });
+  }
+});
+
+// روت داشبورد (نمایش لیست رزروها به صورت HTML)
+app.get('/dashboard', async (req, res) => {
+  try {
+    const bookings = await Booking.find().sort({ createdAt: -1 });
+    const dashboardHTML = `...`; // همان HTML داشبورد شما
+    res.send(dashboardHTML);
+  } catch (error) {
+    console.error('Error generating dashboard:', error.message);
+    res.status(500).send('خطا در بارگذاری داشبورد.');
+  }
+});
+app.post('/api/elder-info', async (req, res) => {
+  const { name, age, condition } = req.body;
+
+  if (!name || !age || !condition) {
+    return res.status(400).json({ message: 'تمامی فیلدهای ضروری را پر کنید.' });
+  }
+
+  try {
+    const elder = new ElderInfo({ name, age, condition });
+    await elder.save();
+    res.status(201).json({ message: 'اطلاعات سالمند با موفقیت ذخیره شد.', elder });
+  } catch (error) {
+    console.error('Error in /api/elder-info:', error.message);
+    res.status(500).json({ message: 'خطا در ذخیره اطلاعات سالمند.', error: error.message });
+  }
+});
+app.post('/api/requests', async (req, res) => {
+  const { requestCode, nurseName, elderId } = req.body;
+
+  if (!requestCode || !nurseName || !elderId) {
+    return res.status(400).json({ message: 'تمامی فیلدهای ضروری را پر کنید.' });
+  }
+
+  try {
+    const request = new Request({ requestCode, nurseName, elderId });
+    await request.save();
+    res.status(201).json({ message: 'درخواست با موفقیت ذخیره شد.', request });
+  } catch (error) {
+    console.error('Error in /api/requests:', error.message);
+    res.status(500).json({ message: 'خطا در ذخیره درخواست.', error: error.message });
+  }
+});
+app.get('/api/elder-info/:id', async (req, res) => {
+  const { id } = req.params;
+
+  try {
+    const elder = await ElderInfo.findById(id);
+    if (!elder) {
+      return res.status(404).json({ message: 'اطلاعات سالمند یافت نشد.' });
+    }
+    res.status(200).json(elder);
+  } catch (error) {
+    console.error('Error in /api/elder-info/:id:', error.message);
+    res.status(500).json({ message: 'خطا در دریافت اطلاعات سالمند.', error: error.message });
+  }
+});
+app.get('/api/requests', async (req, res) => {
+  try {
+    const requests = await Request.find().populate('elderId');
+    res.status(200).json(requests);
+  } catch (error) {
+    console.error('Error in /api/requests:', error.message);
+    res.status(500).json({ message: 'خطا در دریافت درخواست‌ها.', error: error.message });
+  }
+});
+
+
+// استفاده از روت‌های OTP
+app.use('/api/otp', otpRoutes);
 
 // سرو کردن فایل‌های استاتیک React
 app.use(express.static(path.join(__dirname, 'client/build')));
