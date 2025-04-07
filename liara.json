@@ -1,0 +1,8 @@
+{
+  "app": "reverent-galois-9cskjgyhi",
+  "port": 4000,
+  "build": {
+    "location": "iran"
+  },
+  "disks": []
+}
