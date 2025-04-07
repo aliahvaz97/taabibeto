@@ -1,7 +1,7 @@
 {
   "files": {
     "main.css": "/static/css/main.81c41bc2.css",
-    "main.js": "/static/js/main.867785f9.js",
+    "main.js": "/static/js/main.9874bce0.js",
     "static/js/453.8c18b1ce.chunk.js": "/static/js/453.8c18b1ce.chunk.js",
     "static/media/doctor-home-concept-illustration.png": "/static/media/doctor-home-concept-illustration.4a0d2361d429bd0d698e.png",
     "static/media/taabibeto.png": "/static/media/taabibeto.9ef0b28d4a24fb1c57c2.png",
@@ -13,11 +13,11 @@
     "static/media/Vazir-Bold.woff2": "/static/media/Vazir-Bold.06faa6ed072a10f151d8.woff2",
     "index.html": "/index.html",
     "main.81c41bc2.css.map": "/static/css/main.81c41bc2.css.map",
-    "main.867785f9.js.map": "/static/js/main.867785f9.js.map",
+    "main.9874bce0.js.map": "/static/js/main.9874bce0.js.map",
     "453.8c18b1ce.chunk.js.map": "/static/js/453.8c18b1ce.chunk.js.map"
   },
   "entrypoints": [
     "static/css/main.81c41bc2.css",
-    "static/js/main.867785f9.js"
+    "static/js/main.9874bce0.js"
   ]
 }
